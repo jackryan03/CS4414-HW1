@@ -431,6 +431,8 @@ To test your program with this dataset, run:
 
 This command runs KNN search in 384D to find the 2 nearest neighbors to the query point.
 
+We have also uploaded several simple test cases (e.g., `3d-1.json`) in `part2/data` that you can use for debugging.
+
 
 
 ## Starter Code
