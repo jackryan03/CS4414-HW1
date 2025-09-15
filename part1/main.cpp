@@ -5,6 +5,21 @@
 
 using json = nlohmann::json;
 
+// void printTree(Node* node, int depth = 0) {
+//     if (!node) return;
+
+//     // Indent to show depth
+//     for (int i = 0; i < depth; i++) std::cout << "  ";
+
+//     // Print id and embedding
+//     std::cout << "id=" << node->idx
+//               << " embedding=" << node->embedding << "\n";
+
+//     // Recurse
+//     printTree(node->left, depth + 1);
+//     printTree(node->right, depth + 1);
+// }
+
 int runMain(char **argv)
 {
     auto program_start = std::chrono::high_resolution_clock::now();
@@ -67,6 +82,8 @@ int runMain(char **argv)
     // Build balanced KD‐tree
     auto buildtree_start = std::chrono::high_resolution_clock::now();
     Node* root = buildKD(allPoints, 0);
+    // std::cout << "KD-tree structure:\n";
+    // printTree(root);
     auto buildtree_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> buildtree_duration = buildtree_end - buildtree_start;
 
