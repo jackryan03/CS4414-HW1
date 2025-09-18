@@ -98,7 +98,37 @@ Node<T>* buildKD(std::vector<std::pair<T,int>>& items, int depth = 0)
     You should recursively construct the tree and return the root node.
     For now, this is a stub that returns nullptr.
     */
-    return nullptr;
+    if (items.empty()) return nullptr;
+
+    const size_t dim = Embedding_T<T>::Dim();
+    const int axis = depth % dim;
+
+    auto cmp = [axis, dim](const std::pair<T,int> &a, const std::pair<T,int> &b) {
+        for (size_t offset = 0; offset < dim; ++offset) {
+            size_t cur = (axis + offset) % dim;
+
+            float n1 = getCoordinate(a.first, cur);
+            float n2 = getCoordinate(b.first, cur);
+            
+            if (n1 < n2) return true;
+            if (n1 > n2) return false;
+        }
+        return false;
+    };
+
+    std::sort(items.begin(), items.end(), cmp);
+
+    int mid = items.size() / 2;
+
+    Node<T> *node = new Node(items[mid].first, items[mid].second);
+
+    std::vector<std::pair<T,int>> leftItems(items.begin(), items.begin() + mid);
+    std::vector<std::pair<T,int>> rightItems(items.begin() + mid + 1, items.end());
+
+    node->left = buildKD(leftItems, depth + 1);
+    node->right = buildKD(rightItems, depth + 1);
+
+    return node;
 }
 
 template <typename T>
@@ -156,5 +186,33 @@ void knnSearch(Node<T> *node,
     You should recursively traverse the tree and maintain a max-heap of the K closest points found so far.
     For now, this is a stub that does nothing.
     */
+    const size_t dim = Embedding_T<T>::Dim();
+    int axis = depth % dim;
+
+    float queryCoord = getCoordinate(Node<T>::queryEmbedding, axis);
+    float nodeCoord = getCoordinate(node->embedding, axis);
+
+    float dist = Embedding_T<T>::distance(Node<T>::queryEmbedding, node->embedding);
+
+    if (heap.size() < static_cast<size_t>(K)) {
+        heap.emplace(dist, node->idx);
+    } else if (dist < heap.top().first) {
+        heap.pop();
+        heap.emplace(dist, node->idx);
+    }
+
+    Node<T> *nextNode = (queryCoord < nodeCoord) ? node->left : node->right;
+    Node<T> *otherNode = (queryCoord < nodeCoord) ? node->right : node->left;
+
+    if (nextNode) {
+        knnSearch(nextNode, depth + 1, K, heap);
+    }
+
+    if (otherNode) {
+        if (heap.size() < static_cast<size_t>(K) || std::abs(queryCoord - nodeCoord) < heap.top().first) {
+            knnSearch(otherNode, depth + 1, K, heap);
+        }
+    }
+
     return;
 }

@@ -1,3 +1,8 @@
 part1/main
 part1/main.o
 part1/knn.o
+part2/data/passages1.json
+part2/data/passages2.json
+part2/data/queries_emb.json
+part2/main
+part2/main.o
