@@ -118,7 +118,7 @@ Node<T>* buildKD(std::vector<std::pair<T,int>>& items, int depth = 0)
 
     std::sort(items.begin(), items.end(), cmp);
 
-    int mid = items.size() / 2;
+    int mid = (items.size() - 1) / 2;
 
     Node<T> *node = new Node(items[mid].first, items[mid].second);
 
@@ -160,6 +160,24 @@ using MaxHeap = std::priority_queue<
     PQItem,
     std::vector<PQItem>,
     std::less<PQItem>>;
+
+template <typename T>
+void printTree(Node<T> *node, int depth = 0) {
+    if (!node) return;
+    printTree(node->left, depth + 1);
+    std::cout << std::string(depth * 2, ' ') << "Idx: " << node->idx << ", Embedding: ";
+    if constexpr (std::is_same_v<T, float>) {
+        std::cout << node->embedding << "\n";
+    } else {
+        std::cout << "[";
+        for (size_t i = 0; i < node->embedding.size(); ++i) {
+            std::cout << node->embedding[i];
+            if (i < node->embedding.size() - 1) std::cout << ", ";
+        }
+        std::cout << "]\n";
+    }
+    printTree(node->right, depth + 1);
+}
 
 /**
  * @brief Performs a k-nearest neighbors (k-NN) search on a KD-tree.
