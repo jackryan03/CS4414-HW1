@@ -415,7 +415,7 @@ chmod +x download.sh
 The queries are stored in (the first one is served as the query point in the program):
 
 ```
-./data/queries_emd.json
+./data/queries_emb.json
 ```
 
 An example of one of the passage files is stored in:
@@ -426,7 +426,7 @@ An example of one of the passage files is stored in:
 
 To test your program with this dataset, run:
 ```
-./main 384 ./data/queries_emd.json ./data/passages1.json 2
+./main 384 ./data/queries_emb.json ./data/passages1.json 2
 ```
 
 This command runs KNN search in 384D to find the 2 nearest neighbors to the query point.
@@ -708,7 +708,7 @@ You can reuse the data files from Part 2 as your query or passage inputs. For ex
 
 ```
 ./main ../part2/data/3d-1.json ../part2/data/3d-2.json 1 0
-./main ../part2/data/queries_emd.json ../part2/data/passages1.json 1 0
+./main ../part2/data/queries_emb.json ../part2/data/passages1.json 1 0
 ```
 
 
