@@ -675,7 +675,6 @@ This function retrieves the integer tags (IDs) of the nearest neighbors found by
   }
   ```
 
-- 
 
 
 ## Starter code
