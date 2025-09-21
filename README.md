@@ -770,9 +770,10 @@ Your should answer the following question in the report:
   - You should:
     - Use ../part2/data/queries_emb.json as `query_json`, and either ../part2/data/passages1.json or ../part2/data/passages2.json as `passage_json`.
     - Eexperiment with different values of ε. For each value, measure and report the time taken for the KNN search only (exclude data loading and tree construction).
+    - Report the accuracy of your approximate KNN (ANN) search. When we compare approximate KNN (ANN) with exact KNN, we measure accuracy by checking how many neighbors overlap between the two results (ignoring order). Example: If the ANN search returns 10 neighbors, and 7 of them also appear in the exact KNN results, then the accuracy is 70%. The order doesn’t matter. If a point is the 2nd neighbor in the exact search but shows up as the 3rd in the ANN search, we still count it as correct.
     - Report your findings in the following table format:
 
-      | k  | ε (epsilon) | Search Time (ms) | Accuracy (out of k) |
+      | k  | ε (epsilon) | Search Time (ms) | Accuracy |
       | -  | ----------- | ---------------- | -------------------- |
       | 1  | 0.0         | xx               | yy                   |
       | 1  | 5           | xx               | yy                   |
