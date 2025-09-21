@@ -686,7 +686,7 @@ To **compile** the program:
 
 ```bash
 cd part3
-Make all
+make all
 ```
 
 To run the program:
