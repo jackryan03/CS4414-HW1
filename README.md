@@ -692,7 +692,7 @@ make all
 To run the program:
 
 ```bash
-./knn_alglib <query_json> <passage_json> <K> <eps>
+./main <query_json> <passage_json> <K> <eps>
 ```
 
 - `<query_json>`: Path to the JSON file containing the query point.
