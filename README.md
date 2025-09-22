@@ -718,7 +718,7 @@ You can reuse the data files from Part 2 as your query or passage inputs. For ex
 
 ### A. Implement ANN search using ALGLIB
 
-You need to complete the knn_alglib.cpp file by:
+You need to complete the main.cpp file by:
 
 1. Loading and Parsing the Input
 
