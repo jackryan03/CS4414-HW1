@@ -752,7 +752,7 @@ Your should answer the following question in the report:
   - You should compare the performance of:
     - Your own k-d tree KNN implementation from Part 2
     - The ALGLIB-based implementation from Part 3
-  - Run both implementations in exact mode (i.e., set <epsilon> = 0) and search for the 10 nearest neighbors (K = 10).
+  - Run both implementations in exact mode (i.e., set `epsilon` = 0) and search for the 10 nearest neighbors (K = 10).
   - For each method, report the following timing breakdown:
     - Total elapsed time
     - Time to process and parse the input
