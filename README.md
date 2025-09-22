@@ -705,11 +705,12 @@ To run the program:
 
 
 You can reuse the data files from Part 2 as your query or passage inputs. For example:
+```
+cp -r ../part2/data ./data/
+./main ./data/3d-1.json ./data/3d-2.json 1 0
+./main ./data/queries_emb.json ./data/passages1.json 1 0
+```
 
-```
-./main ../part2/data/3d-1.json ../part2/data/3d-2.json 1 0
-./main ../part2/data/queries_emb.json ../part2/data/passages1.json 1 0
-```
 
 
 
