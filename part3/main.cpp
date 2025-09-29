@@ -76,7 +76,46 @@ int main(int argc, char* argv[]) {
             - Get the index of each found neighbour  using alglib::kdtreequeryresultstags
             - Get the distance between each found neighbour and the query embedding using alglib::kdtreequeryresultsdists
         */
+        size_t N = passages_json.size();
+
+        double* raw = new double[N * D];
+
+        for (size_t i = 0; i < N; ++i) {
+            for (size_t d = 0; d < D; ++d) {
+                raw[i * D + d] = passages_json[i]["embedding"][d].get<double>();
+            }
+        }
+
+        alglib::real_2d_array allPoints;
+        allPoints.setcontent(N, D, raw);
+        delete[] raw;
         
+        alglib::integer_1d_array tags;
+        tags.setlength(N);
+
+        for (size_t i = 0; i < N; ++i) {
+            tags[i] = passages_json[i]["id"].get<int>();
+        }
+
+        alglib::kdtree tree;
+        alglib::kdtreebuildtagged(allPoints, tags, (int)N, (int)D, 0, 2, tree);
+
+        alglib::ae_int_t count = alglib::kdtreequeryaknn(tree, query, k, eps);
+        
+        alglib::real_1d_array dist;
+        dist.setlength(count);
+        alglib::kdtreequeryresultsdistances(tree, dist);
+        for (int i = 0; i < count; ++i) {
+            std::cout << "Neighbor " << i+1 << ": distance = " << dist[i] << std::endl;
+        }
+
+        alglib::integer_1d_array idx;
+        idx.setlength(count);
+        alglib::kdtreequeryresultstags(tree, idx);
+        for (int i = 0; i < count; ++i) {
+            std::cout << "Neighbor " << i+1 << ": id = " << idx[i] << std::endl;
+        }
+
     }
     catch(alglib::ap_error &e) {
         std::cerr << "ALGLIB error: " << e.msg << std::endl;
